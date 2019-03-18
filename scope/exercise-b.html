@@ -1,0 +1,48 @@
+ <html>
+  <head></head>
+  <body>
+    <script>
+      exerciseB() {
+        let number = 30;
+
+        function numberFunction() {
+          let number = 75;
+
+          if (number === 75) {
+            let number = 28;
+          }
+          // Log A: number
+          console.log('A:', number); //75;
+
+          function newNumber() {
+            number = 64;
+
+            // Log B: number
+            console.log('B:', number);//64;
+          }
+
+          newNumber();
+
+          // Log C: number
+          console.log('C:', number);//64;
+        }
+
+        numberFunction();
+
+        // Log D: number
+        console.log('D:', number);//30;
+
+        const result = [
+          {A: 75},
+          {B: 64},
+          {C: 64},
+          {D: 30}];
+          
+        return result;
+
+        // Annotation:
+        // Write your annotation here as a comment
+      },
+    </script>
+  </body>
+</html>
