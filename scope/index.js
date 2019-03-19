@@ -174,18 +174,21 @@ const scope = {
     var dog = 'Spot';
 
     function petDog() {
-      // Log A: dog
+      // Log A: dog//1st- Spot
+      console.log('A: ', dog);
 
       if (dog === 'Spot') {
         let dog = 'Fluffy';
-      }
+      } 
 
       function rollOver() {
-        // Log B: dog
+        // Log B: dog//2nd - Spot
+        console.log('B: ', dog);
 
         dog = 'Biscuit';
 
-        // Log C: dog
+        // Log C: dog//3rd - Biscuit;
+        console.log('C: ', dog);
 
       }
 

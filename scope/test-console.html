@@ -1,0 +1,20 @@
+<html>
+  <head></head>
+  <body>
+    <script>
+    const fly = () => {
+      console.log(this);
+    };
+
+    class SpaceProbe {
+      constructor(title, classification) {
+        this.title = title;
+        this.classification = classification;
+        this.fly = fly;
+      } 
+    }
+
+    const ship = new SpaceProbe('voyager', 'classy');
+    </script>
+  </body>
+</html>

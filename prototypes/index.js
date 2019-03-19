@@ -24,7 +24,7 @@ const kittyPrompts = {
     // Return an array of just the names of kitties who are orange e.g.
     // ['Tiger', 'Snickers']
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.filter(cat => cat.color === 'orange').map(cat => cat.name);
     return result;
 
     // Annotation:
@@ -34,7 +34,7 @@ const kittyPrompts = {
   sortByAge() {
     // Sort the kitties by their age
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.sort((a, b) => b.age - a.age);
     return result;
 
     // Annotation:
@@ -55,7 +55,13 @@ const kittyPrompts = {
     // },
     // ...etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = kitties.map(cat => {
+      return {
+        name: cat.name,
+        age: cat.age + 2,
+        color: cat.color
+      }
+    });
     return result;
   }
 };
@@ -87,7 +93,16 @@ const clubPrompts = {
     //   ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = clubs.reduce((acc, club) => {
+      club.members.forEach(member => {
+        if (!acc[member]){
+        acc[member] = [];
+      }
+        acc[member].push(club.club);
+    });
+      return acc;
+    }, {});
+
     return result;
 
     // Annotation:
@@ -122,10 +137,25 @@ const modPrompts = {
     //   { mod: 3, studentsPerInstructor: 10 },
     //   { mod: 4, studentsPerInstructor: 8 }
     // ]
+        //reduce example
+    // const result = mods.reduce((acc, mod) => {
+    //   const obj = {mod: mod.mod};
+    //   obj.studentsPerInstructor = mod.students / mod.instructors;
+    //   acc.push(obj);
+    //   return acc;
+    // }, []);
+    // return result;
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+        //map example
+    const result = mods. map((currentMod) => {
+        let newModElement = {};
+        newModElement.mod = currentMod.mod;
+        newModElement.studentsPerInstructor = currentMod.students / currentMod.instructors;
+
+        return newModElement;
+    });
+
     return result;
-
     // Annotation:
     // Write your annotation here as a comment
   }
@@ -158,7 +188,12 @@ const cakePrompts = {
     //    ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.map(cake => {
+      return {
+        flavor: cake.cakeFlavor,
+        inStock: cake.inStock
+      }
+    });
     return result;
 
     // Annotation:
@@ -186,7 +221,7 @@ const cakePrompts = {
     // ..etc
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.filter(stock => stock.inStock > 0);
     return result;
 
     // Annotation:
@@ -197,7 +232,7 @@ const cakePrompts = {
     // Return the total amount of cakes in stock e.g.
     // 59
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => acc += cake.inStock, 0);
     return result;
 
     // Annotation:
@@ -209,7 +244,14 @@ const cakePrompts = {
     // every cake in the dataset e.g.
     // ['dutch process cocoa', 'toasted sugar', 'smoked sea salt', 'berries', ..etc]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce((acc, cake) => {
+      cake.toppings.forEach(topping => {
+        if(!acc.includes(topping)) {
+          acc.push(topping);
+        }
+      });
+      return acc;
+    }, []);
     return result;
 
     // Annotation:
@@ -227,7 +269,13 @@ const cakePrompts = {
     //    ...etc
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cakes.reduce(function(acc, cake) {
+      cake.toppings.forEach(function(topping) {
+        acc[topping] ? acc[topping]++: acc[topping] = 1;
+      });
+      return acc;
+    }, {});
+
     return result;
 
     // Annotation:
@@ -262,7 +310,7 @@ const classPrompts = {
     //   { roomLetter: 'G', program: 'FE', capacity: 29 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = classrooms.filter(classroom => classroom.program === 'FE');
     return result;
 
     // Annotation:
@@ -277,9 +325,34 @@ const classPrompts = {
     //   beCapacity: 96
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    // const result = classrooms.reduce((acc, classroom) => {
+    //   acc.feCapacity = acc.feCapacity || 0;
+    //     if (classroom.program === 'FE') {
+    //       acc.feCapacity += classroom.capacity;
+    //     }
+    //   acc.beCapacity = acc.beCapacity || 0;
+    //     if (classroom.program === 'BE') {
+    //       acc.beCapacity += classroom.capacity;
+    //     }
+    //   return acc;
+    // }, {});
+
+    //example with accumlator with value
+
+    const result = classrooms.reduce((acc, classroom) => {
+        if (classroom.program === 'FE') {
+            acc.feCapacity += classroom.capacity;
+        } else {
+            acc.beCapacity += classroom.capacity;
+        }
+
+        return acc;
+    }, {feCapacity: 0, beCapacity: 0});
+
     return result;
 
+    //ternary:
+        //let roomCapacity = classroom.program === 'FE' ? 'feCapacity' : 'beCapacity'; 
     // Annotation:
     // Write your annotation here as a comment
   },
@@ -393,7 +466,18 @@ const turingPrompts = {
     //  { name: 'Robbie', studentCount: 18 }
     // ]
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    instructors.map((instructor) => {
+
+      let result = {};
+
+      let matchingCohort = cohorts.find((cohort) => {
+        return cohorts.module === instructor.module;
+      });
+
+      result.name = instructor.name;
+      result.studentCount = matchingCohort.studentCount;
+    })
+
     return result;
 
     // Annotation:
@@ -407,7 +491,19 @@ const turingPrompts = {
     // cohort1804: 10.5
     // }
 
-    const result = 'REPLACE WITH YOUR RESULT HERE';
+    const result = cohorts.reduce((acc, currentCohort) => {
+
+      let matchingInstructors = instructors.filter((instructor) => {
+        return instructor.module === currentCohort.module;
+      });
+
+      let numInstructors = matchingInstructors.length;
+
+      acc[`cohort${currentCohort.cohort}`] = currentCohort.studentCount / numInstructors;
+      
+      return acc;
+    }, {});
+
     return result;
 
     // Annotation:
@@ -422,7 +518,7 @@ const turingPrompts = {
     //     Brittany: [2, 4],
     //     Nathaniel: [2, 4],
     //     Robbie: [4],
-    //     Leta: [4, 2],
+    //     Leta: [2, 4],
     //     Travis: [1, 2, 3, 4],
     //     Louisa: [1, 2, 3, 4],
     //     Christie: [1, 2, 3, 4],
@@ -550,16 +646,18 @@ const astronomyPrompts = {
 
   constellationsStarsExistIn() {
     // Return an array of the names of the constellations that the brightest stars are part of e.g.
-    // [ 'Canis Major',
-    //   'Carina',
-    //   'Boötes',
-    //   'Lyra',
-    //   'Auriga',
-    //   'Orion',
-    //   'Canis Minor',
-    //   'Eridanus',
-    //   'Orion',
-    //   'Centaurus' ]
+    
+    //  [ "Canis Major",
+    //    "Carina",
+    //    "Boötes",
+    //    "Auriga",
+    //    "Orion",
+    //    "Lyra", 
+    //    "Canis Minor", 
+    //    "The Plow", 
+    //    "Orion", 
+    //    "The Little Dipper" ]
+
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
     return result;
@@ -686,11 +784,25 @@ const dinosaurPrompts = {
     Return an array of objects that contain the names of humans who have not been cast in a Jurassic Park movie (yet), their nationality, and their imdbStarMeterRating. The object in the array should be sorted alphabetically by nationality.
 
     e.g.
-
-    [ { name: 'Justin Duncan', nationality: 'Alien', imdbStarMeterRating: 0 },
-      { name: 'Tom Wilhoit', nationality: 'Kiwi', imdbStarMeterRating: 1 },
-      { name: 'Jeo D', nationality: 'Martian', imdbStarMeterRating: 0 },
-      { name: 'Karin Ohman', nationality: 'Swedish', imdbStarMeterRating: 0 } ]
+      [{
+        name: 'Justin Duncan',
+        nationality: 'Alien',
+        imdbStarMeterRating: 0
+      }, 
+      {
+        name: 'Karin Ohman',
+        nationality: 'Chinese',
+        imdbStarMeterRating: 0
+      },
+      {
+        name: 'Tom Wilhoit',
+        nationality: 'Kiwi',
+        imdbStarMeterRating: 1
+      }, {
+        name: 'Jeo D',
+        nationality: 'Martian',
+        imdbStarMeterRating: 0
+      }]
     */
 
     const result = 'REPLACE WITH YOUR RESULT HERE';
